@@ -1,4 +1,4 @@
-# Resignation Letter Generator
+# iResign
 
 The right tool for your graceful resignation.
 
