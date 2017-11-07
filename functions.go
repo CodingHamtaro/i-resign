@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"runtime"
 	"strings"
 
 	"baliance.com/gooxml/document"
@@ -38,7 +39,7 @@ func (e Employee) Init() Employee {
 	fmt.Print("By using this tool - it means that you're now to ready to get out from your comfort zone, to level up your career, to earn more than your current salary, or perhaps you're just bored to your current toxic office life.\n\n")
 
 	fmt.Print("Do you wish to continue? [y/n]: ")
-	e.Resign, _ = reader.ReadString('\n')
+	_, _ = fmt.Scan(&e.Resign)
 	e.Resign = strings.Replace(e.Resign, "\n", "", -1)
 	return e
 }
@@ -46,9 +47,13 @@ func (e Employee) Init() Employee {
 // GetInformation func will collect the information needed for the template
 func (e Employee) GetInformation() Employee {
 
-	fmt.Print("\n\nPlease Provide Your Personal Information.\n\n")
-
-	fmt.Print("Your Fullname: ")
+	if runtime.GOOS == "windows" {
+		fmt.Print("Please Provide Your Personal Information.")
+		_, _ = reader.ReadString('\n')
+	} else {
+		fmt.Print("Please Provide Your Personal Information.\n")
+	}
+	fmt.Print("\nYour Fullname: ")
 	e.Name, _ = reader.ReadString('\n')
 
 	fmt.Print("Your Current Address: ")
@@ -101,13 +106,12 @@ func (e Employee) Validate() {
 	fmt.Print("Effectivity Date: ", e.EffectiveDate+"\n")
 	fmt.Print("\n\n")
 	fmt.Printf("Looks good? [y/n]: ")
-	e.LooksGood, _ = reader.ReadString('\n')
+	_, _ = fmt.Scan(&e.LooksGood)
 	e.LooksGood = strings.Replace(e.LooksGood, "\n", "", -1)
 
 	if e.LooksGood == "y" || e.LooksGood == "Y" {
-		fmt.Print("\n")
 		fmt.Print("Are you really sure? [y/n]: ")
-		e.ReallySure, _ = reader.ReadString('\n')
+		_, _ = fmt.Scan(&e.ReallySure)
 		e.ReallySure = strings.Replace(e.ReallySure, "\n", "", -1)
 		if e.ReallySure == "y" || e.ReallySure == "Y" {
 			fmt.Print("\n")
